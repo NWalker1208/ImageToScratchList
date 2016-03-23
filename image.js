@@ -63,6 +63,11 @@ function argbToRGB(r,g,b) {
 
 function download(filename, text) {
 	var element = document.createElement('a');
+	if (!encodeURIComponent) {
+		console.log('No download capability!');
+		window.alert('Sorry, we are unable to download the text file to your computer');
+		return false;
+	}
 	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 	element.setAttribute('download', filename);
 
@@ -83,7 +88,6 @@ function imgToColor(image) {
 		var canvas = document.createElement('canvas');
 		canvas.width = image.width;
 		canvas.height = image.height;
-		console.log(canvas);
 		
 		ctx = canvas.getContext('2d')
 		ctx.fillStyle = "#FFFFFF";
@@ -93,6 +97,7 @@ function imgToColor(image) {
 		var pixelData = ctx.getImageData(0, 0, image.width, image.height).data;
 		var pixels = [];
 		
+		console.log('Getting pixels...');
 		/*progress.max = pixelData.length/4;*/
 		for (var i = 0; i < pixelData.length; i += 4) {
 			pixels.push(argbToRGB(/*pixelData[i+3], */pixelData[i], pixelData[i+1], pixelData[i+2]));
@@ -106,6 +111,7 @@ function imgToColor(image) {
 			
 			window.alert('This image is too big to use the clipboard. Please select a location to save a text file instead.');
 			
+			console.log('Preparing download...');
 			download('image.txt', pixStr);
 		} else {
 			pixStr = image.width.toString() + ';' + pixels.join('');
