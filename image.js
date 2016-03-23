@@ -116,18 +116,18 @@ function imgToColor(image) {
 		
 		var pixStr;
 		
-		if (pixels.length > 2000) {
+		/*if (pixels.length > 2000) {*/
 			pixStr = image.width.toString() + "\n" + pixels.join('\n');
 			
-			window.alert('This image is too big to use the clipboard. Please select a location to save a text file instead.');
+			/*window.alert('This image is too big to use the clipboard. Please select a location to save a text file instead.');*/
 			
 			console.log('Preparing download...');
 			download('image.txt', pixStr);
-		} else {
+		/*} else {
 			pixStr = image.width.toString() + ';' + pixels.join('');
 			
 			copyToClipboard(pixStr);
-		}
+		}*/
 	} else {
 		window.alert('Please select an image.');
 	}
