@@ -1,3 +1,7 @@
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+
 var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];    
 function Validate(file) {
 	var sFileName = file.value.substr(file.value.lastIndexOf('\\') + 1);
@@ -32,7 +36,12 @@ function pick(evt) {
 		if (FileReader && files && files.length) {
 			var fr = new FileReader();
 			fr.onload = function () {
-				var image = document.getElementById('image');
+				var image;
+				if (image = document.getElementById('image')) {
+					image.remove();
+				}
+				var image = document.createElement('img');
+				image.id = 'image';
 				image.src = fr.result;
 				Width = image.width;
 				Height = image.height;
@@ -40,6 +49,7 @@ function pick(evt) {
 					var scale = 300 / Math.max(Width, Height);
 					image.width *= scale;
 				}
+				document.getElementById('image_box').appendChild(image);
 			}
 			fr.readAsDataURL(files[0]);
 		} else {
